@@ -1,0 +1,92 @@
+{
+  "name": "woloxHackaton19",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint src",
+    "coverage": "jest --coverage",
+    "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
+    "force-clean": "npm run android:clean && rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build && rm -rf node_modules/ && npm cache clean && npm i",
+    "android:clean": "cd android/ && ./gradlew clean",
+    "android:build": "cd android && ./gradlew clean && ./gradlew assembleRelease",
+    "android:install": "cd android && ./gradlew clean && ./gradlew assembleRelease && ./gradlew installRelease",
+    "test:watch": "jest --watch",
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
+    "lint-fix": "eslint src --fix",
+    "lint-diff": "git diff --name-only --cached --relative | grep \\.js$ | xargs eslint",
+    "precommit": "npm run lint-diff"
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.6.1",
+    "apisauce": "^1.1.0",
+    "change-case": "^3.1.0",
+    "i18next": "^17.0.13",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.7.2",
+    "react": "16.8.6",
+    "react-native": "0.60.5",
+    "react-native-config": "^0.11.7",
+    "react-native-gesture-handler": "^1.4.1",
+    "react-navigation": "^3.12.1",
+    "react-navigation-redux-helpers": "^3.0.2",
+    "react-redux": "^7.1.1",
+    "reactotron-apisauce": "^3.0.0",
+    "reactotron-react-native": "^3.6.5",
+    "reactotron-redux": "^3.1.1",
+    "redux": "^4.0.4",
+    "redux-recompose": "^2.2.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "seamless-immutable": "^7.1.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-import-glob": "^2.0.0",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-to-json": "^3.4.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-flowtype": "^4.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "husky": "^3.0.4",
+    "jest": "^24.9.0",
+    "jest-react-native": "^18.0.0",
+    "jsdom": "^15.1.1",
+    "jsdom-global": "^3.0.2",
+    "metro-react-native-babel-preset": "^0.56.0",
+    "prettier": "^1.18.2",
+    "prettier-eslint": "^9.0.0",
+    "react-native-mock-render": "^0.1.5",
+    "react-test-renderer": "16.8.6",
+    "redux-mock-store": "^1.5.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>__tests__/setup/setupEnzyme.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/__tests__/setup/",
+      "<rootDir>/__tests__/redux/store.js",
+      "<rootDir>/__tests__/responses/"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/@react-native-community/async-storage/(?!(lib))"
+    ]
+  }
+}
