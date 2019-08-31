@@ -46,10 +46,10 @@ class SoundTap extends Component {
   };
 
   playPattern = (pattern) => {
-    let timeout = 1500;
+    let timeout = 2400;
     this.setState({ disabled: true });
-    Tts.speak("Escucha la secuencia");
-    const speed = Math.max(250, 800 - 100 * (this.state.pattern.length - 3));
+    Tts.speak("Escucha la secuencia y luego repite.");
+    const speed = Math.max(125, 800 - 100 * (this.state.pattern.length - 3));
     for (let i = 0; i < pattern.length; i++) {
       timeout += speed;
       switch (pattern[i]) {
@@ -75,7 +75,7 @@ class SoundTap extends Component {
         this.setState({leftBlink: false, rightBlink: false});
       }, timeout);
     }
-    setTimeout(() => Tts.speak("Repite la secuencia"), timeout + 1000);
+    setTimeout(() => Tts.speak("Ahora, repite la secuencia"), timeout + 1000);
     setTimeout(() => this.setState({leftBlink: false, rightBlink: false, disabled: false }), timeout + 3000);
   };
 
