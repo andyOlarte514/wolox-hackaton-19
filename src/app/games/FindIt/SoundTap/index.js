@@ -16,7 +16,7 @@ class SoundTap extends Component {
   state = {
     pattern: randomDataSet(5, 1, 3),
     newArray: [],
-    disabled: true
+    disabled: true,
   };
 
   componentDidMount() {
@@ -71,8 +71,8 @@ class SoundTap extends Component {
                 this.setState({newArray: []});
                 this.patternPlay();
               },
-              style: 'cancel'
-            }
+              style: 'cancel',
+            },
           ],
           {cancelable: false},
         );
@@ -87,8 +87,8 @@ class SoundTap extends Component {
               this.setState({newArray: []});
               this.patternPlay();
             },
-            style: 'cancel'
-          }
+            style: 'cancel',
+          },
         ],
         {cancelable: false},
       );
@@ -106,10 +106,10 @@ class SoundTap extends Component {
     console.log(disabled);
     return (
       <View style={styles.container}>
-        <TouchableHighlight style={styles.button1} onPress={this.playButtonPress1}>
+        <TouchableHighlight disabled={disabled} style={styles.button1} onPress={this.playButtonPress1}>
           <Text>Press</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.button2} onPress={this.playButtonPress2}>
+        <TouchableHighlight disabled={disabled} style={styles.button2} onPress={this.playButtonPress2}>
           <Text>Press</Text>
         </TouchableHighlight>
       </View>
@@ -120,18 +120,18 @@ class SoundTap extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   button1: {
     backgroundColor: 'blue',
     width: 200,
-    height: '100%'
+    height: '100%',
   },
   button2: {
     backgroundColor: 'red',
     width: 200,
-    height: '100%'
-  }
+    height: '100%',
+  },
 });
 
 export default SoundTap;
