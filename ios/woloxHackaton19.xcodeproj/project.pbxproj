@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* woloxHackaton19Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* woloxHackaton19Tests.m */; };
 		0412DA62B7B849FE8316B025 /* libPods-woloxHackaton19-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9A1F33562994A38FE9CFC6B /* libPods-woloxHackaton19-tvOS.a */; };
@@ -19,7 +20,6 @@
 		3D98A432842CE11369B13120 /* libPods-woloxHackaton19-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F157C0695C694B120908348A /* libPods-woloxHackaton19-tvOSTests.a */; };
 		CFC84C99F661F9B665B07A97 /* libPods-woloxHackaton19Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3C5485427EC6B6719B6A36B /* libPods-woloxHackaton19Tests.a */; };
 		FAEEB543A38D58CC4772ABBE /* libPods-woloxHackaton19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB220D30021F9EF2E951E45C /* libPods-woloxHackaton19.a */; };
-		23D7B59658DD4098AD3231AE /* heartbeat.wav in Resources */ = {isa = PBXBuildFile; fileRef = E5C633A42BF64D1EADB9B4B1 /* heartbeat.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +67,6 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F157C0695C694B120908348A /* libPods-woloxHackaton19-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-woloxHackaton19-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5C633A42BF64D1EADB9B4B1 /* heartbeat.wav */ = {isa = PBXFileReference; name = "heartbeat.wav"; path = "../assets/audio/heartbeat.wav"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +149,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		665B4A14AE814B5896B14827 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,18 +202,8 @@
 				EB5F25949962BA1476D25D85 /* Pods-woloxHackaton19Tests.debug.xcconfig */,
 				C091A43AEE51323AF89940DA /* Pods-woloxHackaton19Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		665B4A14AE814B5896B14827 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				E5C633A42BF64D1EADB9B4B1 /* heartbeat.wav */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -319,6 +315,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -349,7 +346,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				23D7B59658DD4098AD3231AE /* heartbeat.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
