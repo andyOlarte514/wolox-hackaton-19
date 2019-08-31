@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, TouchableHighlight, Text, View, Alert} from 'react-native';
-import Blink from 'react-native-blink-view';
+import Tts from 'react-native-tts';
 import Sound from 'react-native-sound';
 import LateralButtons from '@components/LateralButtons';
 
@@ -34,14 +34,12 @@ class SoundTap extends Component {
       timeout += Math.floor(Math.random() * 1000 + 100);
       if (pattern[i] === 1) {
         setTimeout(() => {
-          sound1.play();
-          sound1.setCurrentTime(0);
+          Tts.speak('Izquierda');
           this.setState({ leftBlink: true, rightBlink: false });
         }, timeout);
       } else if (pattern[i] === 2) {
         setTimeout(() => {
-          sound2.play();
-          sound2.setCurrentTime(0);
+          Tts.speak('Derecha');
           this.setState({ leftBlink: false, rightBlink: true });
         }, timeout);
       }
@@ -54,16 +52,16 @@ class SoundTap extends Component {
   };
 
   playButtonPress1 = () => {
-    sound1.play();
     sound1.setCurrentTime(0);
+    sound1.play();
     this.isWinner(1);
     this.setState({ leftBlink: true });
     setTimeout(() => this.setState({ leftBlink: false }), 500);        
   };
 
   playButtonPress2 = () => {
-    sound2.play();
     sound2.setCurrentTime(0);
+    sound2.play();
     this.isWinner(2);
     this.setState({ rightBlink: true });
     setTimeout(() => this.setState({ rightBlink: false }), 500);     
