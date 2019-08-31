@@ -30,6 +30,7 @@
     "react-native-config": "^0.11.7",
     "react-native-game-engine": "^0.12.2",
     "react-native-gesture-handler": "^1.4.1",
+    "react-native-orientation-locker": "^1.1.6",
     "react-native-tts": "^3.0.0",
     "react-navigation": "^3.12.1",
     "react-navigation-redux-helpers": "^3.0.2",

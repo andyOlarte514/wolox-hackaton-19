@@ -29,6 +29,8 @@ target 'woloxHackaton19' do
 
   pod 'TextToSpeech', :path => '../node_modules/react-native-tts'
 
+  pod 'react-native-orientation-locker', :path => '../node_modules/react-native-orientation-locker'
+
   target 'woloxHackaton19Tests' do
     inherit! :search_paths
     # Pods for testing
