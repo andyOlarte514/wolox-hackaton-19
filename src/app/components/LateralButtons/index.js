@@ -15,7 +15,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'stretch',
-    width: '100%'
+    position: 'absolute',
+    width: '100%',
+    height: '100%'
   },
   button: {
     flex: 1

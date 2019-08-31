@@ -11,13 +11,15 @@ class GameInstructions extends Component {
     const {instructions, title, onSpeech, onStart} = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.text}>{instructions}</Text>
-        <Text>Powered by</Text>
-        <Image
-          style={styles.image}
-          source={{uri: 'https://miro.medium.com/max/800/1*D3XGGVYs4AaKv616xZm6JQ.png'}}
-        />
+        <View>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.text}>{instructions}</Text>
+          <Text>Powered by</Text>
+          <Image
+            style={styles.image}
+            source={{uri: 'https://miro.medium.com/max/800/1*D3XGGVYs4AaKv616xZm6JQ.png'}}
+          />          
+        </View>
         <LateralButtons onTouchLeft={onSpeech} onTouchRight={onStart} />
       </View>
     );

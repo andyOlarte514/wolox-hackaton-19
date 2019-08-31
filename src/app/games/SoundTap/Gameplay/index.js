@@ -148,7 +148,7 @@ class SoundTap extends Component {
         return;
       }
       defeat.setCurrentTime(0);
-      defeat.setVolume(0.5);
+      defeat.setVolume(1);
       defeat.play();        
       setTimeout(() => Tts.speak('Lo siento, has perdido. Toca la pantalla si quieres volver a empezar.'), 1000);
       this.setState({ disabled: true, defeat: true });
