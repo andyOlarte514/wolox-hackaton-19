@@ -11,44 +11,60 @@ const sound2 = new Sound(require('./snare.wav'), error => error);
 const randomDataSet = (dataSetSize, minValue, maxValue) => {
   return new Array(dataSetSize)
     .fill(0)
-    .map(() => Math.floor(Math.random() * (maxValue - minValue) + minValue));
+    .map((_, i, set) => {
+      if (i == 0) {
+        return Math.floor(Math.random() * (maxValue - minValue) + minValue)
+      }
+      const lastPattern = set[i - 1];
+      return Math.random() > 0.6 ? lastPattern : Math.abs(1 - lastPattern);
+    });
 };
 
 class SoundTap extends Component {
   state = {
-    pattern: randomDataSet(5, 1, 3),
+    pattern: randomDataSet(5, 0, 1),
     newArray: [],
+    intro: true,
     disabled: true,
     leftBlink: false,
     rightBlink: false,
   };
 
   componentDidMount() {
-    this.patternPlay();
+    this.playIntro();
   }
 
-  patternPlay = () => {
-    const {pattern} = this.state;
+  playIntro = () => {
+    Tts.speak("Recuerda, si suena este sonido");
+    setTimeout(() => { this.setState({ leftBlink: true }); sound1.play() }, 2500);
+    setTimeout(() => { this.setState({ leftBlink: false }); Tts.speak("deberás presionar a la izquierda.\n En cambio, si suena el siguiente") }, 3000);
+    setTimeout(() => { this.setState({ rightBlink: true }); sound2.play() }, 7500);
+    setTimeout(() => { this.setState({ rightBlink: false }); Tts.speak("deberás presionar a la derecha.\n ¡Buena suerte!") }, 8500);
+    setTimeout(() => this.playPattern(this.state.pattern), 11500);
+  };
+
+  playPattern = (pattern) => {
     let timeout = 100;
     this.setState({ disabled: true });
     for (let i = 0; i < pattern.length; i++) {
       timeout += Math.floor(Math.random() * 1000 + 100);
-      if (pattern[i] === 1) {
-        setTimeout(() => {
-          // No sirve tener sonidos que son inentendibles para el usuario.
-          // Agarren a una persona, sin saber nada de la App, vendenle los ojos, y diganlé que juegue
-          // Si no puede adivinar que lado tocar, los sonidos no sirven en esta instancia.
-          Tts.speak('Izquierda');
-          this.setState({leftBlink: true, rightBlink: false});
-        }, timeout);
-      } else if (pattern[i] === 2) {
-        setTimeout(() => {
-          // No sirve tener sonidos que son inentendibles para el usuario.
-          // Agarren a una persona, sin saber nada de la App, vendenle los ojos, y diganlé que juegue
-          // Si no puede adivinar que lado tocar, los sonidos no sirven en esta instancia.          
-          Tts.speak('Derecha');
-          this.setState({leftBlink: false, rightBlink: true});
-        }, timeout);
+      switch (pattern[i]) {
+        case 0: {
+          setTimeout(() => {
+            sound1.setCurrentTime(0);
+            sound1.play();
+            this.setState({leftBlink: true, rightBlink: false});
+          }, timeout);
+          break;
+        }
+        case 1: {
+          setTimeout(() => {
+            sound2.setCurrentTime(0);
+            sound2.play();
+            this.setState({leftBlink: false, rightBlink: true});
+          }, timeout);          
+          break;
+        }
       }
       timeout += 500;
       setTimeout(() => {
@@ -58,20 +74,56 @@ class SoundTap extends Component {
     setTimeout(() => this.setState({leftBlink: false, rightBlink: false, disabled: false }), timeout + 1000);
   };
 
+  checkVictory() {
+    const { pattern } = this.state;
+    if (this.state.victory) {
+      const lastPattern = pattern[pattern.length - 1];
+      this.setState({ victory: false });
+      // Intentamos que el patron sea 60-40, para que no sea tan repetitivo
+      const newPattern = [...pattern, Math.random() > 0.6 ? lastPattern : Math.abs(1 - lastPattern)];
+      this.setState({newArray: [], victory: false, pattern: newPattern });
+      this.playPattern(newPattern);
+      return true;
+    }
+    return false
+  };
+
+  checkDefeat() {
+    if (this.state.defeat) {
+      const newPattern = randomDataSet(5, 0, 1);
+      this.setState({ newArray: [], pattern: newPattern, defeat: false });
+      this.playPattern(newPattern);      
+      return true;
+    }
+    return false;
+  }
+
   playButtonPress1 = () => {
+    if (this.checkVictory()) {
+      return;
+    }
+    if (this.checkDefeat()) {
+      return
+    }
     sound1.setCurrentTime(0);
     sound1.play();
     Vibration.vibrate(300);
-    this.isWinner(1);
+    this.isWinner(0);
     this.setState({leftBlink: true});
     setTimeout(() => this.setState({leftBlink: false}), 500);
   };
 
   playButtonPress2 = () => {
+    if (this.checkVictory()) {
+      return;
+    }
+    if (this.checkDefeat()) {
+      return
+    }    
     sound2.setCurrentTime(0);
     sound2.play();
     Vibration.vibrate(300);
-    this.isWinner(2);
+    this.isWinner(1);
     this.setState({rightBlink: true});
     setTimeout(() => this.setState({rightBlink: false}), 500);
   };
@@ -81,42 +133,16 @@ class SoundTap extends Component {
     newArray.push(i);
     if (newArray.length === pattern.length) {
       const isEquals = this.isEqualArrays();
-      Tts.speak('Felicidades, haz ganado. Ahora puedes intentar el próximo nivel');
+
       if (isEquals) {
-        Alert.alert(
-          'Ganaste',
-          'Avanza de nivel',
-          [
-            {
-              text: 'Ok',
-              onPress: () => {
-                pattern.push(Math.floor(Math.random() * 2 + 1));
-                this.setState({newArray: []});
-                this.patternPlay();
-              },
-              style: 'cancel',
-            },
-          ],
-          {cancelable: false},
-        );
+        Tts.speak('Felicidades, haz ganado. Ahora puedes intentar el próximo nivel. Toca la pantalla para continuar.');
+        this.setState({ disabled: true, victory: true });
+        setTimeout(() => this.setState({ disabled: false }), 1000);
         return;
       }
-      Tts.speak('Lo siento, has perdido.');
-      Alert.alert(
-        'Perdiste',
-        'Re iniciar',
-        [
-          {
-            text: 'Ok',
-            onPress: () => {
-              this.setState({newArray: []});
-              this.patternPlay();
-            },
-            style: 'cancel',
-          },
-        ],
-        {cancelable: false},
-      );
+      Tts.speak('Lo siento, has perdido. Toca la pantalla si quieres volver a empezar.');
+      this.setState({ disabled: true, defeat: true });
+      setTimeout(() => this.setState({ disabled: false }), 1000);
     }
   };
 
