@@ -10,9 +10,6 @@ const sound2 = new Sound(require('./snare.wav'), error => error);
 const success = new Sound(require('./success.wav'), error => error);
 const defeat = new Sound(require('./incorrect.mp3'), error => error);
 
-const winAudio = 'Ganaste, presiona en la mitad de la pantalla para continuar, suerte!';
-const loseAudio = 'Perdiste, presiona en la mitad de la pantalla para continuar!';
-
 const randomDataSet = (dataSetSize, minValue, maxValue) => {
   return new Array(dataSetSize)
     .fill(0)
@@ -33,7 +30,6 @@ class SoundTap extends Component {
     disabled: true,
     leftBlink: false,
     rightBlink: false,
-    buttonStop: false
   };
 
   componentDidMount() {
@@ -185,7 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   blinks: {
     position: 'absolute',
@@ -193,13 +189,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   blink: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'stretch'
-  }
+    alignItems: 'stretch',
+  },
 });
 
 export default SoundTap;

@@ -5,11 +5,7 @@ import {Vibration, StyleSheet} from 'react-native';
 import Tts from 'react-native-tts';
 
 const generalInstructions = `
-El juego pretende fortalecer tu memoria a partir de patrones rítmicos, la idea 
-es que nosotros generamos un patron de dos sonidos y tu lo debes replicar oprimiendo
-la pantalla de lado izquierdo o derecho. Siendo el derecho el sonido más agudo y el izquierdo
-el sonido mas grave.
-Si te ha sido claro, presiona el lado derecho de la pantalla para comenzar.
+Si te ha sido claro, presiona el lado derecho de la pantalla para comennzar.
 Si quieres que repita las instrucciones, presiona la pantalla del lado izquierdo.
 `;
 
@@ -27,6 +23,7 @@ Puedes utilizar el celular de cualquier forma para este juego.
 
 function createGame({instructions, Gameplay, mode = 'any'}) {
   let positionInstructions = anyHelp;
+  
   if (mode === 'landscape') {
     positionInstructions = landscapeHelp;
   } else if (mode === 'portait') {
@@ -36,6 +33,7 @@ function createGame({instructions, Gameplay, mode = 'any'}) {
     static defaultProps = {
       level: 1,
     };
+
     state = {step: 'instructions'};
 
     handleSpeech = () => {

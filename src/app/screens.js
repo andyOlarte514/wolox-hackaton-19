@@ -13,6 +13,7 @@ export default createStackNavigator(
     [Routes.Home]: {
       screen: SoundTap/* createBottomTabNavigator(
         {
+          ...inferRoute({FindIt}),
           ...inferRoute({SoundTap}),
         },
         tabNavConfig,
