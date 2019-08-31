@@ -99,6 +99,7 @@ class SoundTap extends Component {
           ],
           {cancelable: false},
         );
+        return;
       }
       Tts.speak('Lo siento, has perdido.');
       Alert.alert(
