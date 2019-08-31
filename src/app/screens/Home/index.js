@@ -1,6 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
-import CustomText from '@components/CustomText';
+import {View} from 'react-native';
 import FindIt from '@app/games/FindIt';
 
 import styles from './styles';
