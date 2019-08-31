@@ -1,7 +1,5 @@
 import Sound from 'react-native-sound';
 
-Sound.setCategory('Playback');
-
 function updateSound(touchArea, heartbeat) {
   const { sound, screen: { width, height } } = heartbeat;
   const x = touchArea.x - heartbeat.x;
