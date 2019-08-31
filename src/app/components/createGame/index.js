@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import GameInstructions from '@components/GameInstructions';
 import Orientation from 'react-native-orientation-locker';
+import { Vibration } from 'react-native';
 import Tts from 'react-native-tts';
 
 const generalInstructions = `
@@ -39,11 +40,13 @@ function createGame({instructions, Gameplay, mode = 'any'}) {
       Tts.stop();
       Tts.setDefaultLanguage('es-MX');
       Tts.speak(instructions + positionInstructions + generalInstructions);
+      Vibration.vibrate(300);
     };
 
     handleStart = () => {
       Tts.stop();
       this.setState({step: 'playing'});
+      Vibration.vibrate(300);
     };
 
     handleFinish = isVictory => {}; // TODO: Finish this

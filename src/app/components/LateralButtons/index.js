@@ -1,11 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, View, StyleSheet } from 'react-native';
 
-function LateralButtons({ onTouchLeft, onTouchRight }) {
+function LateralButtons({ onTouchLeft, onTouchRight, disabled }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onTouchLeft} style={styles.button} />
-      <TouchableOpacity onPress={onTouchRight} style={styles.button} />
+      <TouchableOpacity onPress={onTouchLeft} style={styles.button} disabled={disabled} />
+      <TouchableOpacity onPress={onTouchRight} style={styles.button} disabled={disabled} />
     </View>
   )
 }

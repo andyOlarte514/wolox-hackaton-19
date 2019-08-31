@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, TouchableHighlight, Text, View, Alert} from 'react-native';
+import {StyleSheet, Vibration, Text, View, Alert} from 'react-native';
 import Tts from 'react-native-tts';
 import Sound from 'react-native-sound';
 import LateralButtons from '@components/LateralButtons';
@@ -30,6 +30,7 @@ class SoundTap extends Component {
   patternPlay = () => {
     const {pattern} = this.state;
     let timeout = 100;
+    this.setState({ disabled: true });
     for (let i = 0; i < pattern.length; i++) {
       timeout += Math.floor(Math.random() * 1000 + 100);
       if (pattern[i] === 1) {
@@ -54,12 +55,13 @@ class SoundTap extends Component {
         this.setState({leftBlink: false, rightBlink: false});
       }, timeout);
     }
-    setTimeout(() => this.setState({leftBlink: false, rightBlink: false}), timeout + 1000);
+    setTimeout(() => this.setState({leftBlink: false, rightBlink: false, disabled: false }), timeout + 1000);
   };
 
   playButtonPress1 = () => {
     sound1.setCurrentTime(0);
     sound1.play();
+    Vibration.vibrate(300);
     this.isWinner(1);
     this.setState({leftBlink: true});
     setTimeout(() => this.setState({leftBlink: false}), 500);
@@ -68,6 +70,7 @@ class SoundTap extends Component {
   playButtonPress2 = () => {
     sound2.setCurrentTime(0);
     sound2.play();
+    Vibration.vibrate(300);
     this.isWinner(2);
     this.setState({rightBlink: true});
     setTimeout(() => this.setState({rightBlink: false}), 500);
@@ -78,6 +81,7 @@ class SoundTap extends Component {
     newArray.push(i);
     if (newArray.length === pattern.length) {
       const isEquals = this.isEqualArrays();
+      Tts.speak('Felicidades, haz ganado. Ahora puedes intentar el próximo nivel');
       if (isEquals) {
         Alert.alert(
           'Ganaste',
@@ -96,6 +100,7 @@ class SoundTap extends Component {
           {cancelable: false},
         );
       }
+      Tts.speak('Lo siento, has perdido.');
       Alert.alert(
         'Perdiste',
         'Re iniciar',
@@ -116,8 +121,8 @@ class SoundTap extends Component {
 
   isEqualArrays = () => {
     const {pattern, newArray} = this.state;
-    const iqual = JSON.stringify(pattern) === JSON.stringify(newArray);
-    return iqual;
+    const equal = JSON.stringify(pattern) === JSON.stringify(newArray);
+    return equal;
   };
 
   render() {
@@ -128,7 +133,7 @@ class SoundTap extends Component {
           <View style={[styles.blink, {backgroundColor: leftBlink ? '#000' : '#fff'}]} />
           <View style={[styles.blink, {backgroundColor: rightBlink ? '#000' : '#fff'}]} />
         </View>
-        <LateralButtons onTouchLeft={this.playButtonPress1} onTouchRight={this.playButtonPress2} />
+        <LateralButtons disabled={disabled} onTouchLeft={this.playButtonPress1} onTouchRight={this.playButtonPress2} />
       </View>
     );
   }
