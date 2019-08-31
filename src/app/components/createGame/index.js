@@ -5,7 +5,7 @@ import {Vibration, StyleSheet} from 'react-native';
 import Tts from 'react-native-tts';
 
 const generalInstructions = `
-Para continuar, presiona el lado derecho de la pantalla para comennzar.
+Para continuar, presiona el lado derecho de la pantalla.
 Si quieres que repita este mensaje, presiona la pantalla del lado izquierdo.
 `;
 
@@ -18,7 +18,7 @@ Deberás utilizar el celular de forma vertical para jugar este juego.
 `;
 
 const anyHelp = `
-En este juego deberás pulsar los botones, acorde a las instrucciones dadas mediante voz.
+En este juego deberás presionar la pantalla, acorde a las instrucciones dadas mediante voz.
 
 Se recomienda el uso de audífonos para una mejor experiencia.
 `;
