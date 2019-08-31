@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, TouchableHighlight, Text, View, Alert} from 'react-native';
+import {StyleSheet, Vibration, Text, View, Alert} from 'react-native';
 import Tts from 'react-native-tts';
 import Sound from 'react-native-sound';
 import LateralButtons from '@components/LateralButtons';
@@ -7,6 +7,8 @@ import LateralButtons from '@components/LateralButtons';
 Sound.setCategory('Ambient', true);
 const sound1 = new Sound(require('./kick.wav'), error => error);
 const sound2 = new Sound(require('./snare.wav'), error => error);
+const success = new Sound(require('./success.wav'), error => error);
+const defeat = new Sound(require('./incorrect.mp3'), error => error);
 
 const winAudio = 'Ganaste, presiona en la mitad de la pantalla para continuar, suerte!';
 const loseAudio = 'Perdiste, presiona en la mitad de la pantalla para continuar!';
@@ -14,13 +16,20 @@ const loseAudio = 'Perdiste, presiona en la mitad de la pantalla para continuar!
 const randomDataSet = (dataSetSize, minValue, maxValue) => {
   return new Array(dataSetSize)
     .fill(0)
-    .map(() => Math.floor(Math.random() * (maxValue - minValue) + minValue));
+    .map((_, i, set) => {
+      if (i == 0) {
+        return Math.floor(Math.random() * (maxValue - minValue) + minValue)
+      }
+      const lastPattern = set[i - 1];
+      return Math.random() > 0.6 ? lastPattern : Math.abs(1 - lastPattern);
+    });
 };
 
 class SoundTap extends Component {
   state = {
-    pattern: randomDataSet(5, 1, 3),
+    pattern: randomDataSet(5, 0, 1),
     newArray: [],
+    intro: true,
     disabled: true,
     leftBlink: false,
     rightBlink: false,
@@ -28,47 +37,99 @@ class SoundTap extends Component {
   };
 
   componentDidMount() {
-    this.patternPlay();
+    this.playIntro();
   }
 
-  patternPlay = () => {
-    const {pattern} = this.state;
+  playIntro = () => {
+    Tts.speak("Recuerda, si suena este sonido");
+    setTimeout(() => { this.setState({ leftBlink: true }); sound1.play() }, 2500);
+    setTimeout(() => { this.setState({ leftBlink: false }); Tts.speak("deberás presionar a la izquierda.\n En cambio, si suena el siguiente") }, 3000);
+    setTimeout(() => { this.setState({ rightBlink: true }); sound2.play() }, 7500);
+    setTimeout(() => { this.setState({ rightBlink: false }); Tts.speak("deberás presionar a la derecha.\n ¡Buena suerte!") }, 8500);
+    setTimeout(() => this.playPattern(this.state.pattern), 11500);
+  };
+
+  playPattern = (pattern) => {
     let timeout = 100;
+    this.setState({ disabled: true });
     for (let i = 0; i < pattern.length; i++) {
       timeout += Math.floor(Math.random() * 1000 + 100);
-      if (pattern[i] === 1) {
-        setTimeout(() => {
-          sound1.setCurrentTime(0);
-          sound1.play();
-          this.setState({leftBlink: true, rightBlink: false});
-        }, timeout);
-      } else if (pattern[i] === 2) {
-        setTimeout(() => {
-          sound2.setCurrentTime(0);
-          sound2.play();
-          this.setState({leftBlink: false, rightBlink: true});
-        }, timeout);
+      switch (pattern[i]) {
+        case 0: {
+          setTimeout(() => {
+            sound1.setCurrentTime(0);
+            sound1.play();
+            this.setState({leftBlink: true, rightBlink: false});
+          }, timeout);
+          break;
+        }
+        case 1: {
+          setTimeout(() => {
+            sound2.setCurrentTime(0);
+            sound2.play();
+            this.setState({leftBlink: false, rightBlink: true});
+          }, timeout);          
+          break;
+        }
       }
       timeout += 500;
       setTimeout(() => {
         this.setState({leftBlink: false, rightBlink: false});
       }, timeout);
     }
-    setTimeout(() => this.setState({leftBlink: false, rightBlink: false}), timeout + 1000);
+    setTimeout(() => this.setState({leftBlink: false, rightBlink: false, disabled: false }), timeout + 1000);
   };
 
+  checkVictory() {
+    const { pattern } = this.state;
+    if (this.state.victory) {  
+      const lastPattern = pattern[pattern.length - 1];
+      this.setState({ victory: false });
+      // Intentamos que el patron sea 60-40, para que no sea tan repetitivo
+      const newPattern = [...pattern, Math.random() > 0.6 ? lastPattern : Math.abs(1 - lastPattern)];
+      this.setState({newArray: [], victory: false, pattern: newPattern });
+      this.playPattern(newPattern);
+      return true;
+    }
+    return false
+  };
+
+  checkDefeat() {
+    if (this.state.defeat) {
+      const newPattern = randomDataSet(5, 0, 1);
+      this.setState({ newArray: [], pattern: newPattern, defeat: false });
+      this.playPattern(newPattern);      
+      return true;
+    }
+    return false;
+  }
+
   playButtonPress1 = () => {
+    if (this.checkVictory()) {
+      return;
+    }
+    if (this.checkDefeat()) {
+      return
+    }
     sound1.setCurrentTime(0);
     sound1.play();
-    this.isWinner(1);
+    Vibration.vibrate(300);
+    this.isWinner(0);
     this.setState({leftBlink: true});
     setTimeout(() => this.setState({leftBlink: false}), 500);
   };
 
   playButtonPress2 = () => {
+    if (this.checkVictory()) {
+      return;
+    }
+    if (this.checkDefeat()) {
+      return
+    }    
     sound2.setCurrentTime(0);
     sound2.play();
-    this.isWinner(2);
+    Vibration.vibrate(300);
+    this.isWinner(1);
     this.setState({rightBlink: true});
     setTimeout(() => this.setState({rightBlink: false}), 500);
   };
@@ -79,61 +140,38 @@ class SoundTap extends Component {
     if (newArray.length === pattern.length) {
       const isEquals = this.isEqualArrays();
       if (isEquals) {
-        Tts.setDefaultLanguage('es-MX');
-        Tts.speak(winAudio);
-        Alert.alert(
-          'Ganaste',
-          'Avanza de nivel',
-          [
-            {
-              text: 'Ok',
-              onPress: () => {
-                pattern.push(Math.floor(Math.random() * 2 + 1));
-                this.setState({newArray: []});
-                this.patternPlay();
-              },
-              style: 'cancel'
-            }
-          ],
-          {cancelable: false},
-        );
+        success.setCurrentTime(0);
+        success.setVolume(1);
+        success.play();
+        setTimeout(() => Tts.speak('Felicidades, haz ganado. Ahora puedes intentar el próximo nivel. Toca la pantalla para continuar.'), 1000);          
+        this.setState({ disabled: true, victory: true });
+        setTimeout(() => this.setState({ disabled: false }), 2000);
+        return;
       }
-      Tts.setDefaultLanguage('es-MX');
-      Tts.speak(loseAudio);
-      Alert.alert(
-        'Perdiste',
-        'Re iniciar',
-        [
-          {
-            text: 'Ok',
-            onPress: () => {
-              this.setState({newArray: []});
-              this.patternPlay();
-            },
-            style: 'cancel'
-          }
-        ],
-        {cancelable: false},
-      );
+      defeat.setCurrentTime(0);
+      defeat.setVolume(0.5);
+      defeat.play();        
+      setTimeout(() => Tts.speak('Lo siento, has perdido. Toca la pantalla si quieres volver a empezar.'), 1000);
+      this.setState({ disabled: true, defeat: true });
+      setTimeout(() => this.setState({ disabled: false }), 2000);
     }
   };
 
   isEqualArrays = () => {
     const {pattern, newArray} = this.state;
-    const iqual = JSON.stringify(pattern) === JSON.stringify(newArray);
-    return iqual;
+    const equal = JSON.stringify(pattern) === JSON.stringify(newArray);
+    return equal;
   };
 
   render() {
     const {disabled, leftBlink, rightBlink} = this.state;
-    console.log(disabled);
     return (
       <View style={styles.container}>
         <View style={styles.blinks}>
           <View style={[styles.blink, {backgroundColor: leftBlink ? '#000' : '#fff'}]} />
           <View style={[styles.blink, {backgroundColor: rightBlink ? '#000' : '#fff'}]} />
         </View>
-        <LateralButtons onTouchLeft={this.playButtonPress1} onTouchRight={this.playButtonPress2} />
+        <LateralButtons disabled={disabled} onTouchLeft={this.playButtonPress1} onTouchRight={this.playButtonPress2} />
       </View>
     );
   }

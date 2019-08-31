@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import GameInstructions from '@components/GameInstructions';
 import Orientation from 'react-native-orientation-locker';
+import {Vibration, StyleSheet} from 'react-native';
 import Tts from 'react-native-tts';
 
 const generalInstructions = `
@@ -21,7 +22,7 @@ Deberás utilizar el celular de forma vertical para jugar este juego.
 `;
 
 const anyHelp = `
-  Puedes utilizar el celular de cualquier forma para este juego.
+Puedes utilizar el celular de cualquier forma para este juego.
 `;
 
 function createGame({instructions, Gameplay, mode = 'any'}) {
@@ -41,11 +42,13 @@ function createGame({instructions, Gameplay, mode = 'any'}) {
       Tts.stop();
       Tts.setDefaultLanguage('es-MX');
       Tts.speak(instructions + positionInstructions + generalInstructions);
+      Vibration.vibrate(300);
     };
 
     handleStart = () => {
       Tts.stop();
       this.setState({step: 'playing'});
+      Vibration.vibrate(300);
     };
 
     handleFinish = isVictory => {}; // TODO: Finish this
@@ -68,7 +71,8 @@ function createGame({instructions, Gameplay, mode = 'any'}) {
       if (step === 'instructions') {
         return (
           <GameInstructions
-            instructions={instructions + positionInstructions + generalInstructions}
+            title={instructions}
+            instructions={positionInstructions + generalInstructions}
             onSpeech={this.handleSpeech}
             onStart={this.handleStart}
           />
