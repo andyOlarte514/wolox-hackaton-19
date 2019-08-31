@@ -3,7 +3,7 @@ import createGame from '@components/createGame';
 import Gameplay from './Gameplay';
 
 const instructions = `
-  Instrucciones del juego
+  Saludos
 `;
 
 export default createGame({instructions, Gameplay });

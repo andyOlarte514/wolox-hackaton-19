@@ -5,8 +5,8 @@ import {Vibration, StyleSheet} from 'react-native';
 import Tts from 'react-native-tts';
 
 const generalInstructions = `
-Si te ha sido claro, presiona el lado derecho de la pantalla para comennzar.
-Si quieres que repita las instrucciones, presiona la pantalla del lado izquierdo.
+Para continuar, presiona el lado derecho de la pantalla para comennzar.
+Si quieres que repita este mensaje, presiona la pantalla del lado izquierdo.
 `;
 
 const landscapeHelp = `
@@ -18,7 +18,9 @@ Deberás utilizar el celular de forma vertical para jugar este juego.
 `;
 
 const anyHelp = `
-Puedes utilizar el celular de cualquier forma para este juego.
+En este juego deberás pulsar los botones, acorde a las instrucciones dadas mediante voz.
+
+Se recomienda el uso de audífonos para una mejor experiencia.
 `;
 
 function createGame({instructions, Gameplay, mode = 'any'}) {
