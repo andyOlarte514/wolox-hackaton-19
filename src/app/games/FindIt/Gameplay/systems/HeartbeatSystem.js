@@ -6,9 +6,14 @@ function updateSound(touchArea, heartbeat) {
   const { sound, screen: { width, height } } = heartbeat;
   const x = touchArea.x - heartbeat.x;
   const y = touchArea.y - heartbeat.y;
-  const d = Math.hypot(x, y) / Math.hypot(width, height);
-  sound.setVolume(0.5 + 0.5 * d);
-  sound.setPan(x / width);
+  const d = 1 - (Math.hypot(x, y) / Math.hypot(width, height));
+  if (sound._loaded) {
+    sound.setVolume(0.5 + 0.5 * d);
+    sound.setSpeed(Math.max(1, d * 10));
+    if (!!sound._playing) {
+      sound.play();
+    }
+  }
 }
 
 function HeartbeatSystem(entities) {
@@ -16,21 +21,12 @@ function HeartbeatSystem(entities) {
   const heartbeat = entities[2];
   if (heartbeat) {
     if (heartbeat.sound) {
-      if (heartbeat.soundLoaded) {
-        updateSound(touchArea, heartbeat);
-        return;
-      }
+      updateSound(touchArea, heartbeat);
     } else {
-      heartbeat.sound = new Sound(require('../assets/audio/heartbeat.wav'), Sound.MAIN_BUNDLE, error => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-        heartbeat.soundLoaded = true;
-        sound.setNumberOfLoops(-1);
-        updateSound(touchArea, heartbeat)
-        sound.play();
-      })
+      heartbeat.sound = new Sound(require('../assets/audio/heartbeat.wav'));
+      heartbeat.sound.setNumberOfLoops(100);
+      updateSound(touchArea, heartbeat);
+      heartbeat.sound.play();
     }
   }
   return entities;
