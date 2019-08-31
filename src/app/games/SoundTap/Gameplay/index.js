@@ -7,6 +7,8 @@ import LateralButtons from '@components/LateralButtons';
 Sound.setCategory('Ambient', true);
 const sound1 = new Sound(require('./kick.wav'), error => error);
 const sound2 = new Sound(require('./snare.wav'), error => error);
+const success = new Sound(require('./success.wav'), error => error);
+const defeat = new Sound(require('./incorrect.mp3'), error => error);
 
 const randomDataSet = (dataSetSize, minValue, maxValue) => {
   return new Array(dataSetSize)
@@ -76,7 +78,7 @@ class SoundTap extends Component {
 
   checkVictory() {
     const { pattern } = this.state;
-    if (this.state.victory) {
+    if (this.state.victory) {  
       const lastPattern = pattern[pattern.length - 1];
       this.setState({ victory: false });
       // Intentamos que el patron sea 60-40, para que no sea tan repetitivo
@@ -133,16 +135,21 @@ class SoundTap extends Component {
     newArray.push(i);
     if (newArray.length === pattern.length) {
       const isEquals = this.isEqualArrays();
-
       if (isEquals) {
-        Tts.speak('Felicidades, haz ganado. Ahora puedes intentar el próximo nivel. Toca la pantalla para continuar.');
+        success.setCurrentTime(0);
+        success.setVolume(1);
+        success.play();
+        setTimeout(() => Tts.speak('Felicidades, haz ganado. Ahora puedes intentar el próximo nivel. Toca la pantalla para continuar.'), 1000);          
         this.setState({ disabled: true, victory: true });
-        setTimeout(() => this.setState({ disabled: false }), 1000);
+        setTimeout(() => this.setState({ disabled: false }), 2000);
         return;
       }
-      Tts.speak('Lo siento, has perdido. Toca la pantalla si quieres volver a empezar.');
+      defeat.setCurrentTime(0);
+      defeat.setVolume(0.5);
+      defeat.play();        
+      setTimeout(() => Tts.speak('Lo siento, has perdido. Toca la pantalla si quieres volver a empezar.'), 1000);
       this.setState({ disabled: true, defeat: true });
-      setTimeout(() => this.setState({ disabled: false }), 1000);
+      setTimeout(() => this.setState({ disabled: false }), 2000);
     }
   };
 
