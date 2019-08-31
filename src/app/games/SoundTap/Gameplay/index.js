@@ -27,7 +27,7 @@ const randomDataSet = (dataSetSize, minValue, maxValue) => {
 
 class SoundTap extends Component {
   state = {
-    pattern: randomDataSet(5, 0, 1),
+    pattern: randomDataSet(3, 0, 1),
     newArray: [],
     intro: true,
     disabled: true,
@@ -50,10 +50,12 @@ class SoundTap extends Component {
   };
 
   playPattern = (pattern) => {
-    let timeout = 100;
+    let timeout = 2400;
     this.setState({ disabled: true });
+    Tts.speak("Escucha la secuencia y luego repite.");
+    const speed = Math.max(125, 800 - 100 * (this.state.pattern.length - 3));
     for (let i = 0; i < pattern.length; i++) {
-      timeout += Math.floor(Math.random() * 1000 + 100);
+      timeout += speed;
       switch (pattern[i]) {
         case 0: {
           setTimeout(() => {
@@ -77,7 +79,8 @@ class SoundTap extends Component {
         this.setState({leftBlink: false, rightBlink: false});
       }, timeout);
     }
-    setTimeout(() => this.setState({leftBlink: false, rightBlink: false, disabled: false }), timeout + 1000);
+    setTimeout(() => Tts.speak("Ahora, repite la secuencia"), timeout + 1000);
+    setTimeout(() => this.setState({leftBlink: false, rightBlink: false, disabled: false }), timeout + 3000);
   };
 
   checkVictory() {
@@ -96,7 +99,7 @@ class SoundTap extends Component {
 
   checkDefeat() {
     if (this.state.defeat) {
-      const newPattern = randomDataSet(5, 0, 1);
+      const newPattern = randomDataSet(3, 0, 1);
       this.setState({ newArray: [], pattern: newPattern, defeat: false });
       this.playPattern(newPattern);      
       return true;
