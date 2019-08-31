@@ -5,8 +5,8 @@ import Routes from '@constants/routes';
 
 i18next.addResources('es', 'app', {
   es: {
-    [Routes.Tab1]: 'Tab 1',
-    [Routes.Tab2]: 'Tab 2',
-    [Routes.Home]: 'Home'
-  }
+    [Routes.FindIt]: 'FindIt',
+    [Routes.SoundTap]: 'SoundTap',
+    [Routes.Home]: 'Home',
+  },
 });

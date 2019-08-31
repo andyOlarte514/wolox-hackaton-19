@@ -1,14 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
-import CustomText from '@components/CustomText';
-import FindIt from '@app/games/FindIt';
+import {View} from 'react-native';
+import SoundTap from '@app/games/SoundTap';
 
 import styles from './styles';
+
+console.log('sound tap');
 
 export default function Home() {
   return (
     <View style={styles.container}>
-      <FindIt />
+      <SoundTap />
     </View>
   );
 }

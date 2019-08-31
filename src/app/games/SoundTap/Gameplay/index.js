@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, TouchableHighlight, Text, View, Alert} from 'react-native';
+import Tts from 'react-native-tts';
 import Sound from 'react-native-sound';
+import LateralButtons from '@components/LateralButtons';
 
 Sound.setCategory('Ambient', true);
 const sound1 = new Sound(require('./kick.wav'), error => error);
@@ -17,6 +19,8 @@ class SoundTap extends Component {
     pattern: randomDataSet(5, 1, 3),
     newArray: [],
     disabled: true,
+    leftBlink: false,
+    rightBlink: false,
   };
 
   componentDidMount() {
@@ -30,28 +34,39 @@ class SoundTap extends Component {
       timeout += Math.floor(Math.random() * 1000 + 100);
       if (pattern[i] === 1) {
         setTimeout(() => {
-          sound1.play();
           sound1.setCurrentTime(0);
+          sound1.play();
+          this.setState({leftBlink: true, rightBlink: false});
         }, timeout);
       } else if (pattern[i] === 2) {
         setTimeout(() => {
-          sound2.play();
           sound2.setCurrentTime(0);
+          sound2.play();
+          this.setState({leftBlink: false, rightBlink: true});
         }, timeout);
       }
+      timeout += 500;
+      setTimeout(() => {
+        this.setState({leftBlink: false, rightBlink: false});
+      }, timeout);
     }
+    setTimeout(() => this.setState({leftBlink: false, rightBlink: false}), timeout + 1000);
   };
 
   playButtonPress1 = () => {
-    sound1.play();
     sound1.setCurrentTime(0);
+    sound1.play();
     this.isWinner(1);
+    this.setState({leftBlink: true});
+    setTimeout(() => this.setState({leftBlink: false}), 500);
   };
 
   playButtonPress2 = () => {
-    sound2.play();
     sound2.setCurrentTime(0);
+    sound2.play();
     this.isWinner(2);
+    this.setState({rightBlink: true});
+    setTimeout(() => this.setState({rightBlink: false}), 500);
   };
 
   isWinner = i => {
@@ -102,16 +117,15 @@ class SoundTap extends Component {
   };
 
   render() {
-    const {disabled} = this.state;
+    const {disabled, leftBlink, rightBlink} = this.state;
     console.log(disabled);
     return (
       <View style={styles.container}>
-        <TouchableHighlight disabled={disabled} style={styles.button1} onPress={this.playButtonPress1}>
-          <Text>Press</Text>
-        </TouchableHighlight>
-        <TouchableHighlight disabled={disabled} style={styles.button2} onPress={this.playButtonPress2}>
-          <Text>Press</Text>
-        </TouchableHighlight>
+        <View style={styles.blinks}>
+          <View style={[styles.blink, {backgroundColor: leftBlink ? '#000' : '#fff'}]} />
+          <View style={[styles.blink, {backgroundColor: rightBlink ? '#000' : '#fff'}]} />
+        </View>
+        <LateralButtons onTouchLeft={this.playButtonPress1} onTouchRight={this.playButtonPress2} />
       </View>
     );
   }
@@ -121,16 +135,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-  },
-  button1: {
-    backgroundColor: 'blue',
-    width: 200,
+    width: '100%',
     height: '100%',
   },
-  button2: {
-    backgroundColor: 'red',
-    width: 200,
+  blinks: {
+    position: 'absolute',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    width: '100%',
     height: '100%',
+  },
+  blink: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'stretch',
   },
 });
 
