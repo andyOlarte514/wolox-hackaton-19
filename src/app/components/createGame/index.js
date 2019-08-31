@@ -22,7 +22,7 @@ Puedes utilizar el celular de cualquier forma para este juego.
 
 function createGame({instructions, Gameplay, mode = 'any'}) {
   let positionInstructions = anyHelp;
-
+  
   if (mode === 'landscape') {
     positionInstructions = landscapeHelp;
   } else if (mode === 'portait') {
@@ -37,6 +37,7 @@ function createGame({instructions, Gameplay, mode = 'any'}) {
 
     handleSpeech = () => {
       Tts.stop();
+      Tts.setDefaultLanguage('es-MX');
       Tts.speak(instructions + positionInstructions + generalInstructions);
     };
 
