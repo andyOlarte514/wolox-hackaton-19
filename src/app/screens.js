@@ -11,13 +11,13 @@ import SoundTap from '@games/SoundTap';
 export default createStackNavigator(
   {
     [Routes.Home]: {
-      screen: createBottomTabNavigator(
+      screen: SoundTap/* createBottomTabNavigator(
         {
           ...inferRoute({FindIt}),
           ...inferRoute({SoundTap}),
         },
         tabNavConfig,
-      ),
+      ) */,
       navigationOptions: screensNavOptions[Routes.Home]
     }
   },

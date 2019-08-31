@@ -6,4 +6,4 @@ const instructions = `
   Repite las instrucciones que te diga.
 `;
 
-export default createGame({instructions, Gameplay, mode: 'portait'});
+export default createGame({instructions, Gameplay });

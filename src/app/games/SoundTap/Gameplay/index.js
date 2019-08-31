@@ -34,14 +34,18 @@ class SoundTap extends Component {
       timeout += Math.floor(Math.random() * 1000 + 100);
       if (pattern[i] === 1) {
         setTimeout(() => {
-          sound1.setCurrentTime(0);
-          sound1.play();
+          // No sirve tener sonidos que son inentendibles para el usuario.
+          // Agarren a una persona, sin saber nada de la App, vendenle los ojos, y diganlé que juegue
+          // Si no puede adivinar que lado tocar, los sonidos no sirven en esta instancia.
+          Tts.speak('Izquierda');
           this.setState({leftBlink: true, rightBlink: false});
         }, timeout);
       } else if (pattern[i] === 2) {
         setTimeout(() => {
-          sound2.setCurrentTime(0);
-          sound2.play();
+          // No sirve tener sonidos que son inentendibles para el usuario.
+          // Agarren a una persona, sin saber nada de la App, vendenle los ojos, y diganlé que juegue
+          // Si no puede adivinar que lado tocar, los sonidos no sirven en esta instancia.          
+          Tts.speak('Derecha');
           this.setState({leftBlink: false, rightBlink: true});
         }, timeout);
       }
@@ -118,7 +122,6 @@ class SoundTap extends Component {
 
   render() {
     const {disabled, leftBlink, rightBlink} = this.state;
-    console.log(disabled);
     return (
       <View style={styles.container}>
         <View style={styles.blinks}>
