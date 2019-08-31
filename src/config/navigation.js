@@ -28,10 +28,10 @@ const defaultNavOptions = ({ navigation }) => ({
 export const screensNavOptions = {
   // TODO: Add here the screens nav options that changes with respect to
   // the default ones defined in defaultNavOptions, for example...
-  /*
   [Routes.Home]: {
-    headerTitle: 'Home'
+    header: null
   },
+  /*
   [Routes.Login]: {
     header: null
   }

@@ -10,13 +10,7 @@ import Home from '@screens/Home';
 export default createStackNavigator(
   {
     [Routes.Home]: {
-      screen: createBottomTabNavigator(
-        {
-          ...inferRoute({ Tab1: Home }),
-          ...inferRoute({ Tab2: Home })
-        },
-        tabNavConfig
-      ),
+      screen: Home,
       navigationOptions: screensNavOptions[Routes.Home]
     }
   },
