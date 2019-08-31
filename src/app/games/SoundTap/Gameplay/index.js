@@ -142,7 +142,7 @@ class SoundTap extends Component {
         success.setCurrentTime(0);
         success.setVolume(1);
         success.play();
-        setTimeout(() => Tts.speak('Felicidades, haz ganado. Ahora puedes intentar el próximo nivel. Toca la pantalla para continuar.'), 1000);          
+        setTimeout(() => Tts.speak(`Has subido al nivel ${pattern.length - 2}. Toca la pantalla para continuar.`), 1000);          
         this.setState({ disabled: true, victory: true });
         setTimeout(() => this.setState({ disabled: false }), 2000);
         return;
