@@ -8,6 +8,9 @@ Sound.setCategory('Ambient', true);
 const sound1 = new Sound(require('./kick.wav'), error => error);
 const sound2 = new Sound(require('./snare.wav'), error => error);
 
+const winAudio = 'Ganaste, presiona en la mitad de la pantalla para continuar, suerte!';
+const loseAudio = 'Perdiste, presiona en la mitad de la pantalla para continuar!';
+
 const randomDataSet = (dataSetSize, minValue, maxValue) => {
   return new Array(dataSetSize)
     .fill(0)
@@ -21,6 +24,7 @@ class SoundTap extends Component {
     disabled: true,
     leftBlink: false,
     rightBlink: false,
+    buttonStop: false
   };
 
   componentDidMount() {
@@ -75,6 +79,8 @@ class SoundTap extends Component {
     if (newArray.length === pattern.length) {
       const isEquals = this.isEqualArrays();
       if (isEquals) {
+        Tts.setDefaultLanguage('es-MX');
+        Tts.speak(winAudio);
         Alert.alert(
           'Ganaste',
           'Avanza de nivel',
@@ -86,12 +92,14 @@ class SoundTap extends Component {
                 this.setState({newArray: []});
                 this.patternPlay();
               },
-              style: 'cancel',
-            },
+              style: 'cancel'
+            }
           ],
           {cancelable: false},
         );
       }
+      Tts.setDefaultLanguage('es-MX');
+      Tts.speak(loseAudio);
       Alert.alert(
         'Perdiste',
         'Re iniciar',
@@ -102,8 +110,8 @@ class SoundTap extends Component {
               this.setState({newArray: []});
               this.patternPlay();
             },
-            style: 'cancel',
-          },
+            style: 'cancel'
+          }
         ],
         {cancelable: false},
       );
@@ -136,7 +144,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     width: '100%',
-    height: '100%',
+    height: '100%'
   },
   blinks: {
     position: 'absolute',
@@ -144,13 +152,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
     width: '100%',
-    height: '100%',
+    height: '100%'
   },
   blink: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'stretch',
-  },
+    alignItems: 'stretch'
+  }
 });
 
 export default SoundTap;
