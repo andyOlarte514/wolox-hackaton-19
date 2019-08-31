@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 
 function Circle({ radius, x, y, backgroundColor }) {
   return <View style={[styles.circle, {
-    backgroundColor: backgroundColor,
+    backgroundColor,
     width: radius * 2,
     height: radius * 2,
     borderRadius: radius,
