@@ -1,7 +1,8 @@
+import createGame from '@components/createGame';
+
 import Gameplay from './Gameplay';
+import SoundTap from './SoundTap';
 
-import createGame from "@components/createGame";
+const instructions = 'Instrucciones de prueba.';
 
-const instructions = "Instrucciones de prueba.";
-
-export default createGame({ instructions, Gameplay, mode: 'landscape' });
+export default createGame({instructions, Gameplay, mode: 'landscape'});

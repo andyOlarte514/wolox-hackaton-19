@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-
+import React, {Component} from 'react';
 import GameInstructions from '@components/GameInstructions';
-
 import Orientation from 'react-native-orientation-locker';
-
 import Tts from 'react-native-tts';
 
 const generalInstructions = `
@@ -23,9 +20,7 @@ const anyHelp = `
 Puedes utilizar el celular de cualquier forma para este juego.
 `;
 
-
-function createGame({ instructions, Gameplay, mode = 'any' }) {
-
+function createGame({instructions, Gameplay, mode = 'any'}) {
   let positionInstructions = anyHelp;
 
   if (mode === 'landscape') {
@@ -35,27 +30,26 @@ function createGame({ instructions, Gameplay, mode = 'any' }) {
   }
   class Game extends Component {
     static defaultProps = {
-      level: 1
+      level: 1,
     };
 
-    state = { step: 'instructions' };
+    state = {step: 'instructions'};
 
     handleSpeech = () => {
       Tts.stop();
       Tts.speak(instructions + positionInstructions + generalInstructions);
-    }
+    };
 
     handleStart = () => {
       Tts.stop();
-      this.setState({ step: 'playing' });
-    }
+      this.setState({step: 'playing'});
+    };
 
-    handleFinish = (isVictory) => {}; // TODO: Finish this
-
+    handleFinish = isVictory => {}; // TODO: Finish this
 
     componentDidMount() {
       if (mode === 'landscape') {
-        Orientation.lockToLandscape()
+        Orientation.lockToLandscape();
       } else if (mode === 'portait') {
         Orientation.lockToPortrait();
       }
@@ -66,8 +60,8 @@ function createGame({ instructions, Gameplay, mode = 'any' }) {
     }
 
     render() {
-      const { step } = this.state;
-      const { level } = this.props;
+      const {step} = this.state;
+      const {level} = this.props;
       if (step === 'instructions') {
         return (
           <GameInstructions
@@ -77,7 +71,7 @@ function createGame({ instructions, Gameplay, mode = 'any' }) {
           />
         );
       }
-      return <Gameplay level={level} onFinish={this.handleFinish} />
+      return <Gameplay level={level} onFinish={this.handleFinish} />;
     }
   }
 
