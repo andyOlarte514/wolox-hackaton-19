@@ -1435,9 +1435,9 @@ async-limiter@^1.0.0, async-limiter@~1.0.0:
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
 
 async@^2.4.0:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
-  integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.6.4.tgz#706b7ff6084664cd7eae713f6f965433b5504221"
+  integrity sha512-mzo5dfJYwAn29PeiJ0zvwTo04zj8HDJj0Mn8TD7sno7q12prdbnasKJHhkm2c1LgrhlJ0teaea8860oxi51mGA==
   dependencies:
     lodash "^4.17.14"
 
@@ -4846,9 +4846,9 @@ lodash.unescape@4.0.1:
   integrity sha1-vyJJiGzlFM2hEvrpIYzcBlIR/Jw=
 
 lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-symbols@^2.2.0:
   version "2.2.0"
@@ -6356,10 +6356,24 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
+react-native-blink-view@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-blink-view/-/react-native-blink-view-0.0.6.tgz#f8dce7246c8995236644f81d196839bda362ab00"
+  integrity sha512-zdd+v9UcPy0RIbmR13Q9gDFa2UXTy1a8Zkcn8YewUbUIzha+nVjn9NhjgKuEyGq0IHZ2QCpdCQdMUnBFsVuhIg==
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-config@^0.11.7:
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.7.tgz#a2b323f2ecd76a4df88cbb6bc86eaa2ef9febee7"
   integrity sha512-dn5s+zhwLyE25vRT/vaEtLk/j8ZL1UZKvejORNDWakSwpOnLmFurFeaZV83IqkPlfWHXHFdsYe2IRYG1WN4WkQ==
+
+react-native-game-engine@^0.12.2:
+  version "0.12.3"
+  resolved "https://registry.yarnpkg.com/react-native-game-engine/-/react-native-game-engine-0.12.3.tgz#168c5ce60565694a928f7179eba81494eac7a38f"
+  integrity sha512-HBBYcBGKCAmZXR3fI1VLSoP6KRmQTweEa4RWgThSrr4PIgOpefivYJJEi4iz8neJQPt9oTE1C7hjFqbGWEdEyg==
+  dependencies:
+    rxjs "^6.2.2"
 
 react-native-gesture-handler@^1.4.1:
   version "1.4.1"
@@ -6387,6 +6401,11 @@ react-native-mock-render@^0.1.5:
     react-timer-mixin "^0.13.3"
     warning "^2.1.0"
 
+react-native-orientation-locker@^1.1.6:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-orientation-locker/-/react-native-orientation-locker-1.5.0.tgz#324853937eed4835ecd1c8613ab2206135d908ac"
+  integrity sha512-4XOCGmNN4BXg5JUFjUuXpsfhPJmbA3LkQilJO1ed+6vL97teTdG2w5IEevKiqL9/hPjeWE8YYtX/YW+yp53hkg==
+
 react-native-safe-area-view@^0.14.1:
   version "0.14.7"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.14.7.tgz#e1dd1c4d25a90677df2c15347fdddb2306ba5971"
@@ -6401,12 +6420,22 @@ react-native-safe-area-view@^0.14.1:
   dependencies:
     debounce "^1.2.0"
 
+react-native-sound@^0.11.0:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/react-native-sound/-/react-native-sound-0.11.2.tgz#e542dc5b9e16ab4b3ac7e6eaddb1fc8d98da9038"
+  integrity sha512-LmGc8lgOK3qecYMVQpyHvww/C+wgT6sWeMpVbOe4NCRGC2yKd4fo4U0KBUo9PO7AqKESO3I/2GZg1/C0+bwiiA==
+
 react-native-tab-view@^1.2.0, react-native-tab-view@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-1.4.1.tgz#f113cd87485808f0c991abec937f70fa380478b9"
   integrity sha512-Bke8KkDcDhvB/z0AS7MnQKMD2p6Kwfc1rSKlMOvg9CC5CnClQ2QEnhPSbwegKDYhUkBI92iH/BYy7hNSm5kbUQ==
   dependencies:
     prop-types "^15.6.1"
+
+react-native-tts@^3.0.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-tts/-/react-native-tts-3.3.0.tgz#563e5a2ecc35bca9e66e05e020ad8dce9432b253"
+  integrity sha512-ebPMDrMYYlh/A7MI0qUWgWFpORYuGJ/u6acOLclZC56CD5dv3IUI+sQKQEX4nFZTaXkGMdibX4uqtBjpGHWhaA==
 
 react-native@0.60.5:
   version "0.60.5"
@@ -6507,6 +6536,11 @@ react-refresh@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.4.0.tgz#d421f9bd65e0e4b9822a399f14ac56bda9c92292"
   integrity sha512-bacjSio8GOtzNZKZZM6EWqbhlbb6pr28JWJWFTLwEBKvPIBRo6/Ob68D2EWZA2VyTdQxAh+TRnCYOPNKsQiXTA==
+
+react-responsive-spritesheet@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/react-responsive-spritesheet/-/react-responsive-spritesheet-2.3.9.tgz#58822bd7532a46de8d564042c40d90e1d2aaafc5"
+  integrity sha512-7x1co8f6mg01wy5a8KsRDGOQ6a1inxhakdc/z2gXVhOBgRPQznUipWdGYZXHw7ecI5kPdXC1uXvFIXmWip3vnA==
 
 react-test-renderer@16.8.6:
   version "16.8.6"
@@ -6948,6 +6982,13 @@ rxjs@^5.4.3:
   integrity sha512-xx2itnL5sBbqeeiVgNPVuQQ1nC8Jp2WfNJhXWHmElW9YmrpS9UVnNzhP3EH3HFqexO5Tlp8GhYY+WEcqcVMvGw==
   dependencies:
     symbol-observable "1.0.1"
+
+rxjs@^6.2.2:
+  version "6.6.7"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"
+  integrity sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==
+  dependencies:
+    tslib "^1.9.0"
 
 rxjs@^6.4.0:
   version "6.5.2"
